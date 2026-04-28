@@ -12,7 +12,8 @@ class FrontendAssetPolicyTest extends TestCase
     public function test_css_and_js_assets_do_not_use_remote_urls(): void
     {
         $paths = [
-            config_path('backpack'),
+            app_path('Filament'),
+            app_path('Providers/Filament'),
             resource_path('views'),
         ];
 
@@ -36,23 +37,18 @@ class FrontendAssetPolicyTest extends TestCase
         }
     }
 
-    public function test_backpack_asset_overrides_use_node_modules(): void
+    public function test_package_manifest_has_no_removed_admin_asset_packages(): void
     {
-        $overrideFiles = [
-            resource_path('views/vendor/backpack/ui/inc/styles.blade.php'),
-            resource_path('views/vendor/backpack/ui/inc/scripts.blade.php'),
-            resource_path('views/vendor/backpack/theme-tabler/inc/theme_styles.blade.php'),
-            resource_path('views/vendor/backpack/theme-tabler/inc/theme_scripts.blade.php'),
-            resource_path('views/vendor/backpack/crud/components/datatable/datatable_logic.blade.php'),
-        ];
+        $manifest = json_decode((string) file_get_contents(base_path('package.json')), true, flags: JSON_THROW_ON_ERROR);
+        $dependencies = array_keys($manifest['dependencies'] ?? []);
 
-        foreach ($overrideFiles as $file) {
-            $this->assertFileExists($file);
-
-            $contents = file_get_contents($file);
-
-            $this->assertStringContainsString('node_modules', $contents, $file);
-            $this->assertDoesNotMatchRegularExpression('/https?:\/\/(?:cdn|cdnjs|unpkg|jsdelivr|fonts\.)/i', $contents, $file);
-        }
+        $this->assertEmpty(array_intersect($dependencies, [
+            '@tabler/core',
+            'datatables.net',
+            'jquery',
+            'line-awesome',
+            'noty',
+            'sweetalert',
+        ]));
     }
 }

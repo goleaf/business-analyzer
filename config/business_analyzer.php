@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'admin_user_email' => env('ADMIN_USER_EMAIL', 'admin@example.com'),
     'admin_email' => env('ADMIN_EMAIL', 'admin@example.com'),
 
     'ai_smoke_test' => [

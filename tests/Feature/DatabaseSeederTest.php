@@ -8,6 +8,7 @@ use App\Models\RequestSubmission;
 use App\Models\User;
 use Database\Seeders\DatabaseSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
@@ -28,16 +29,18 @@ class DatabaseSeederTest extends TestCase
         $this->assertGreaterThanOrEqual(2, ContactSubmission::query()->count());
     }
 
-    public function test_seeded_admin_can_authenticate_to_backpack(): void
+    public function test_seeded_admin_can_authenticate_to_filament(): void
     {
         $this->seed(DatabaseSeeder::class);
 
-        $this->post('/admin/login', [
+        $this->assertTrue(Auth::attempt([
             'email' => 'admin@example.com',
             'password' => 'password',
-        ])->assertRedirect('/admin/dashboard');
+        ]));
 
-        $this->assertAuthenticated('backpack');
+        $this->assertAuthenticated('web');
+
+        $this->get('/admin')->assertOk();
     }
 
     public function test_database_seeder_is_idempotent(): void

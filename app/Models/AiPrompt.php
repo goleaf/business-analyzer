@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Database\Factories\AiPromptFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Builder;
@@ -18,7 +17,7 @@ use Illuminate\Database\Eloquent\Model;
 class AiPrompt extends Model
 {
     /** @use HasFactory<AiPromptFactory> */
-    use CrudTrait, HasFactory;
+    use HasFactory;
 
     /**
      * Get the attributes that should be cast.

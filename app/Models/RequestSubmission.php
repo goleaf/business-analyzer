@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Enums\AiProcessingStatus;
 use App\Enums\RequestSubmissionStatus;
-use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Database\Factories\RequestSubmissionFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Builder;
@@ -25,7 +24,7 @@ use Illuminate\Database\Eloquent\Model;
 class RequestSubmission extends Model
 {
     /** @use HasFactory<RequestSubmissionFactory> */
-    use CrudTrait, HasFactory;
+    use HasFactory;
 
     /**
      * Get the attributes that should be cast.

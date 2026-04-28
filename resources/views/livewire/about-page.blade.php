@@ -33,7 +33,7 @@
             </div>
             <div>
                 <dt class="font-medium text-zinc-950">Manage prompts in admin</dt>
-                <dd class="mt-1 text-sm leading-6 text-zinc-600">AI prompt templates remain editable from the Backpack panel.</dd>
+                <dd class="mt-1 text-sm leading-6 text-zinc-600">AI prompt templates remain editable from the Filament panel.</dd>
             </div>
             <div>
                 <dt class="font-medium text-zinc-950">Prepare processing</dt>

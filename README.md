@@ -1,12 +1,12 @@
 # Business Analyzer
 
-Business Analyzer is a Laravel application for collecting business analysis requests, managing submitted data in Backpack, and preparing saved request data for a later AI processing workflow.
+Business Analyzer is a Laravel application for collecting business analysis requests, managing submitted data in Filament, and preparing saved request data for a later AI processing workflow.
 
 ## Stack
 
 - Laravel 13
 - PHP 8.3+
-- Backpack for Laravel 7
+- Filament 5
 - Livewire 4 class-based public pages
 - Tailwind CSS 4
 - Laravel AI SDK
@@ -18,8 +18,8 @@ Business Analyzer is a Laravel application for collecting business analysis requ
 - Public Request page with a Livewire form.
 - Public Contact page with a Livewire form.
 - Database-backed request submissions, contact submissions, AI prompts, cache, sessions, queues, and failed jobs.
-- Backpack admin CRUDs for request submissions, contact submissions, and AI prompts.
-- Backpack `Process Data` action for saved request submissions.
+- Filament admin resources for request submissions, contact submissions, and AI prompts.
+- Filament `Process Data` action for saved request submissions.
 - Seeded admin user for `/admin`.
 
 ## Local Setup
@@ -80,6 +80,7 @@ Set these values locally:
 
 ```env
 ADMIN_EMAIL=admin@example.com
+ADMIN_USER_EMAIL=admin@example.com
 OPENAI_API_KEY=
 ```
 
@@ -87,11 +88,11 @@ Do not commit real API keys or secrets.
 
 ## Frontend Assets
 
-All CSS and JavaScript libraries must be installed with npm and loaded from local `node_modules` paths or compiled through Vite. Do not load CSS or JavaScript libraries from CDN servers.
+Application CSS and JavaScript libraries are installed with npm and compiled through Vite. Filament panel assets are published locally by the Filament Composer package. Do not load CSS or JavaScript libraries from CDN servers.
 
 ## Admin Access
 
-After running the seeders, the Backpack admin panel is available at:
+After running the seeders, the Filament admin panel is available at:
 
 ```text
 /admin
@@ -106,7 +107,7 @@ Password: password
 
 ## AI Processing
 
-AI prompt text is stored in the `ai_prompts` table and managed from Backpack. Request submissions expose a `Process Data` action that dispatches the processing job for saved records only.
+AI prompt text is stored in the `ai_prompts` table and managed from Filament. Request submissions expose a `Process Data` action that dispatches the processing job for saved records only.
 
 The final AI output logic is intentionally not implemented yet. The current structure prepares saved request data and active prompts so the exact processing rules can be added later.
 
