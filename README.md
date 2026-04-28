@@ -110,6 +110,12 @@ AI prompt text is stored in the `ai_prompts` table and managed from Backpack. Re
 
 The final AI output logic is intentionally not implemented yet. The current structure prepares saved request data and active prompts so the exact processing rules can be added later.
 
+Run a manual OpenAI smoke test through the Laravel AI SDK:
+
+```bash
+php artisan ai:chatgpt-smoke-test "weather in vilnius, lithuania this week" --web-search --city=Vilnius --country=LT
+```
+
 ## Testing
 
 Run the test suite:

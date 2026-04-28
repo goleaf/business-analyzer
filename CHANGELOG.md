@@ -23,6 +23,8 @@ Update this file for every user-visible, operational, or architectural change.
 - Added a local frontend asset policy requiring CSS and JavaScript libraries to be installed with npm and loaded from `node_modules`.
 - Added Backpack view overrides so admin CSS and JavaScript libraries load from npm packages instead of CDN URLs.
 - Added tests that prevent remote CSS and JavaScript asset references.
+- Added a manual ChatGPT API smoke-test command that uses the Laravel AI SDK OpenAI provider.
+- Added a fake-backed test for the ChatGPT smoke-test command.
 
 ### Verified
 
