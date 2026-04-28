@@ -22,7 +22,6 @@ class AiPromptFactory extends Factory
         return [
             'name' => fake()->unique()->sentence(3),
             'prompt' => fake()->paragraphs(3, true),
-            'is_active' => true,
             'sort_order' => fake()->numberBetween(0, 100),
         ];
     }

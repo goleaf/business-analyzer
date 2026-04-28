@@ -2,17 +2,18 @@
 
 namespace App\Filament\Resources\AiPrompts\Tables;
 
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
+use App\Actions\MoveAiPromptAction;
+use App\Filament\Resources\AiPrompts\AiPromptResource;
+use App\Models\AiPrompt;
+use Filament\Actions\Action;
 use Filament\Actions\EditAction;
-use Filament\Actions\ViewAction;
 use Filament\Forms\Components\DatePicker;
-use Filament\Tables\Columns\IconColumn;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
-use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
 class AiPromptsTable
 {
@@ -20,9 +21,6 @@ class AiPromptsTable
     {
         return $table
             ->columns([
-                TextColumn::make('id')
-                    ->label('ID')
-                    ->sortable(),
                 TextColumn::make('name')
                     ->searchable()
                     ->sortable(),
@@ -31,13 +29,6 @@ class AiPromptsTable
                     ->limit(80)
                     ->searchable()
                     ->toggleable(),
-                IconColumn::make('is_active')
-                    ->label('Is active')
-                    ->boolean(),
-                TextColumn::make('sort_order')
-                    ->label('Sort order')
-                    ->numeric()
-                    ->sortable(),
                 TextColumn::make('created_at')
                     ->label('Created date')
                     ->dateTime()
@@ -48,8 +39,6 @@ class AiPromptsTable
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                TernaryFilter::make('is_active')
-                    ->label('Is active'),
                 Filter::make('created_at')
                     ->label('Created date')
                     ->schema([
@@ -70,18 +59,29 @@ class AiPromptsTable
                             );
                     }),
             ])
+            ->recordUrl(fn (Model $record): string => AiPromptResource::getUrl('edit', ['record' => $record]))
+            ->reorderable('sort_order')
             ->recordActions([
-                ViewAction::make()
-                    ->authorize('view'),
+                Action::make('moveUp')
+                    ->label('Move up')
+                    ->icon(Heroicon::OutlinedArrowUp)
+                    ->iconButton()
+                    ->tooltip('Move up')
+                    ->color('gray')
+                    ->successNotification(null)
+                    ->authorize('update')
+                    ->action(fn (AiPrompt $record): bool => app(MoveAiPromptAction::class)->up($record)),
+                Action::make('moveDown')
+                    ->label('Move down')
+                    ->icon(Heroicon::OutlinedArrowDown)
+                    ->iconButton()
+                    ->tooltip('Move down')
+                    ->color('gray')
+                    ->successNotification(null)
+                    ->authorize('update')
+                    ->action(fn (AiPrompt $record): bool => app(MoveAiPromptAction::class)->down($record)),
                 EditAction::make()
                     ->authorize('update'),
-            ])
-            ->toolbarActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make()
-                        ->authorize('deleteAny')
-                        ->authorizeIndividualRecords('delete'),
-                ]),
             ]);
     }
 }

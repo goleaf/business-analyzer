@@ -22,8 +22,6 @@ class FilamentResourceSchemaTest extends TestCase
             ->fillForm([
                 'name' => null,
                 'prompt' => null,
-                'is_active' => true,
-                'sort_order' => 0,
             ])
             ->call('create')
             ->assertHasFormErrors([

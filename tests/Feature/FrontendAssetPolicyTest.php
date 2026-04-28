@@ -51,4 +51,27 @@ class FrontendAssetPolicyTest extends TestCase
             'sweetalert',
         ]));
     }
+
+    public function test_public_frontend_uses_scss_entrypoint_only(): void
+    {
+        $manifest = json_decode((string) file_get_contents(base_path('package.json')), true, flags: JSON_THROW_ON_ERROR);
+        $frontendPackages = array_keys(array_merge(
+            $manifest['dependencies'] ?? [],
+            $manifest['devDependencies'] ?? [],
+        ));
+
+        $viteConfig = (string) file_get_contents(base_path('vite.config.js'));
+        $layout = (string) file_get_contents(resource_path('views/components/layouts/app.blade.php'));
+
+        $this->assertFileExists(resource_path('scss/app.scss'));
+        $this->assertFileDoesNotExist(resource_path('css/app.css'));
+        $this->assertStringContainsString('resources/scss/app.scss', $viteConfig);
+        $this->assertStringContainsString('resources/scss/app.scss', $layout);
+        $this->assertStringNotContainsString('resources/css/app.css', $viteConfig);
+        $this->assertEmpty(array_intersect($frontendPackages, [
+            '@tailwindcss/vite',
+            'tailwindcss',
+            'bootstrap',
+        ]));
+    }
 }

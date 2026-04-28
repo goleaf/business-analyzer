@@ -1,0 +1,61 @@
+<svg width="1200" height="820" viewBox="0 0 1200 820" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+    <title id="title">Operational analysis workspace</title>
+    <desc id="desc">Abstract dashboard showing process flow, performance signals, and decision paths.</desc>
+    <rect width="1200" height="820" rx="42" fill="#101113"/>
+    <path d="M0 610C151 538 293 536 426 604C557 671 712 675 888 616C1029 569 1134 581 1200 617V820H0V610Z" fill="#173D3A"/>
+    <path d="M0 0H1200V820H0V0Z" fill="url(#paint0_radial)" fill-opacity=".72"/>
+    <path d="M72 110H1128" stroke="#2D3234" stroke-width="2"/>
+    <path d="M72 218H1128" stroke="#23282B" stroke-width="2"/>
+    <path d="M72 326H1128" stroke="#23282B" stroke-width="2"/>
+    <path d="M72 434H1128" stroke="#23282B" stroke-width="2"/>
+    <path d="M72 542H1128" stroke="#23282B" stroke-width="2"/>
+    <path d="M72 650H1128" stroke="#2D3234" stroke-width="2"/>
+    <path d="M164 72V742" stroke="#23282B" stroke-width="2"/>
+    <path d="M316 72V742" stroke="#23282B" stroke-width="2"/>
+    <path d="M468 72V742" stroke="#23282B" stroke-width="2"/>
+    <path d="M620 72V742" stroke="#23282B" stroke-width="2"/>
+    <path d="M772 72V742" stroke="#23282B" stroke-width="2"/>
+    <path d="M924 72V742" stroke="#23282B" stroke-width="2"/>
+    <path d="M1076 72V742" stroke="#23282B" stroke-width="2"/>
+    <rect x="98" y="96" width="262" height="150" rx="26" fill="#F7F2E8"/>
+    <rect x="128" y="130" width="102" height="12" rx="6" fill="#101113"/>
+    <rect x="128" y="162" width="172" height="12" rx="6" fill="#B9B09B"/>
+    <rect x="128" y="194" width="118" height="12" rx="6" fill="#B9B09B"/>
+    <circle cx="310" cy="172" r="30" fill="#E9B44C"/>
+    <path d="M298 173L307 182L324 160" stroke="#101113" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="816" y="112" width="246" height="124" rx="24" fill="#173D3A"/>
+    <path d="M855 197C888 142 922 162 948 133C978 101 1007 151 1028 126" stroke="#79D0BA" stroke-width="8" stroke-linecap="round"/>
+    <circle cx="855" cy="197" r="9" fill="#79D0BA"/>
+    <circle cx="948" cy="133" r="9" fill="#79D0BA"/>
+    <circle cx="1028" cy="126" r="9" fill="#79D0BA"/>
+    <rect x="476" y="300" width="252" height="176" rx="28" fill="#E8EEF4"/>
+    <rect x="514" y="342" width="104" height="12" rx="6" fill="#101113"/>
+    <rect x="514" y="376" width="176" height="12" rx="6" fill="#A6B1BC"/>
+    <rect x="514" y="412" width="72" height="12" rx="6" fill="#A6B1BC"/>
+    <rect x="614" y="412" width="76" height="12" rx="6" fill="#2B6C67"/>
+    <rect x="672" y="514" width="270" height="156" rx="28" fill="#F7F2E8"/>
+    <rect x="714" y="553" width="102" height="12" rx="6" fill="#101113"/>
+    <rect x="714" y="589" width="176" height="12" rx="6" fill="#B9B09B"/>
+    <rect x="714" y="623" width="126" height="12" rx="6" fill="#B9B09B"/>
+    <rect x="166" y="500" width="238" height="132" rx="24" fill="#2B6C67"/>
+    <path d="M207 590L244 552L287 582L339 530" stroke="#F7F2E8" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="207" cy="590" r="8" fill="#F7F2E8"/>
+    <circle cx="244" cy="552" r="8" fill="#F7F2E8"/>
+    <circle cx="287" cy="582" r="8" fill="#F7F2E8"/>
+    <circle cx="339" cy="530" r="8" fill="#F7F2E8"/>
+    <path d="M360 171C450 171 452 389 476 389" stroke="#E9B44C" stroke-width="5" stroke-linecap="round" stroke-dasharray="12 16"/>
+    <path d="M728 388C802 388 806 174 816 174" stroke="#79D0BA" stroke-width="5" stroke-linecap="round" stroke-dasharray="12 16"/>
+    <path d="M601 476C601 564 672 568 672 592" stroke="#E9B44C" stroke-width="5" stroke-linecap="round" stroke-dasharray="12 16"/>
+    <path d="M476 421C392 421 404 566 404 566" stroke="#79D0BA" stroke-width="5" stroke-linecap="round" stroke-dasharray="12 16"/>
+    <circle cx="476" cy="389" r="13" fill="#E9B44C"/>
+    <circle cx="728" cy="388" r="13" fill="#79D0BA"/>
+    <circle cx="672" cy="592" r="13" fill="#E9B44C"/>
+    <circle cx="404" cy="566" r="13" fill="#79D0BA"/>
+    <defs>
+        <radialGradient id="paint0_radial" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(640 373) rotate(89.1) scale(520 764)">
+            <stop stop-color="#2B6C67" stop-opacity=".55"/>
+            <stop offset=".48" stop-color="#101113" stop-opacity=".1"/>
+            <stop offset="1" stop-color="#101113" stop-opacity=".95"/>
+        </radialGradient>
+    </defs>
+</svg>

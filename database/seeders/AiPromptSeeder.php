@@ -13,7 +13,6 @@ class AiPromptSeeder extends Seeder
             ['name' => 'Business Growth Analysis'],
             [
                 'prompt' => 'Analyze the saved business request data and identify practical growth opportunities. Use only the submitted business description, achievements, and expected results.',
-                'is_active' => true,
                 'sort_order' => 10,
             ],
         );
@@ -22,17 +21,15 @@ class AiPromptSeeder extends Seeder
             ['name' => 'Operational Risk Review'],
             [
                 'prompt' => 'Review the saved request for operational risks, missing context, and assumptions that should be clarified before final analysis.',
-                'is_active' => true,
                 'sort_order' => 20,
             ],
         );
 
         AiPrompt::query()->updateOrCreate(
-            ['name' => 'Archived Draft Prompt'],
+            ['name' => 'Executive Summary Prompt'],
             [
-                'prompt' => 'This inactive prompt is kept as an editable draft in the admin panel.',
-                'is_active' => false,
-                'sort_order' => 90,
+                'prompt' => 'Summarize the analysis into a concise executive brief with prioritized next steps.',
+                'sort_order' => 30,
             ],
         );
     }

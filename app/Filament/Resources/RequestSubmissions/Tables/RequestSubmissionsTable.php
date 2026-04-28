@@ -5,16 +5,15 @@ namespace App\Filament\Resources\RequestSubmissions\Tables;
 use App\Enums\AiProcessingStatus;
 use App\Enums\RequestSubmissionStatus;
 use App\Filament\Actions\ProcessRequestSubmissionDataAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
+use App\Filament\Resources\RequestSubmissions\RequestSubmissionResource;
 use Filament\Actions\EditAction;
-use Filament\Actions\ViewAction;
 use Filament\Forms\Components\DatePicker;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
 class RequestSubmissionsTable
 {
@@ -22,9 +21,6 @@ class RequestSubmissionsTable
     {
         return $table
             ->columns([
-                TextColumn::make('id')
-                    ->label('ID')
-                    ->sortable(),
                 TextColumn::make('business_description')
                     ->label('Business description preview')
                     ->limit(60)
@@ -111,19 +107,11 @@ class RequestSubmissionsTable
                             );
                     }),
             ])
+            ->recordUrl(fn (Model $record): string => RequestSubmissionResource::getUrl('edit', ['record' => $record]))
             ->recordActions([
                 ProcessRequestSubmissionDataAction::make(),
-                ViewAction::make()
-                    ->authorize('view'),
                 EditAction::make()
                     ->authorize('update'),
-            ])
-            ->toolbarActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make()
-                        ->authorize('deleteAny')
-                        ->authorizeIndividualRecords('delete'),
-                ]),
             ]);
     }
 

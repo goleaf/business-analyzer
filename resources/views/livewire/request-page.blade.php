@@ -1,44 +1,69 @@
-<section class="mx-auto max-w-4xl px-4 py-12 lg:px-8 lg:py-16">
-    <div class="mb-8 space-y-3">
-        <p class="text-sm font-semibold uppercase tracking-normal text-teal-700">Request</p>
-        <h1 class="text-3xl font-semibold tracking-normal text-zinc-950 sm:text-4xl">Submit business data</h1>
-    </div>
+<section class="form-page">
+    <div class="form-layout">
+        <aside class="form-intro reveal-up">
+            <p class="eyebrow eyebrow--dark">Request</p>
+            <h1 class="form-intro__title">Build the operating brief.</h1>
+            <p class="form-intro__text">
+                Submit enough context to identify bottlenecks, momentum, and the outcomes worth optimizing first.
+            </p>
 
-    <form wire:submit="submit" class="space-y-6 rounded-md border border-zinc-200 bg-white p-6">
-        @if (session('status'))
-            <div class="rounded-md border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-800">
-                {{ session('status') }}
+            <div class="insight-list">
+                @foreach ([
+                    ['Context', 'What the business does, who it serves, and where the pressure is.'],
+                    ['Proof', 'What is already working and where momentum exists.'],
+                    ['Target', 'What should improve, by when, and how success should be measured.'],
+                ] as [$title, $description])
+                    <div class="insight-item">
+                        <h2 class="insight-item__title">{{ $title }}</h2>
+                        <p class="insight-item__text">{{ $description }}</p>
+                    </div>
+                @endforeach
             </div>
-        @endif
+        </aside>
 
-        <div>
-            <label for="business_description" class="block text-sm font-medium text-zinc-900">Business description</label>
-            <textarea id="business_description" wire:model="business_description" rows="5" class="mt-2 block w-full rounded-md border border-zinc-300 px-3 py-2 text-zinc-950 shadow-sm focus:border-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-600/20"></textarea>
-            @error('business_description')
-                <p class="mt-2 text-sm text-red-700">{{ $message }}</p>
-            @enderror
-        </div>
+        <form wire:submit="submit" class="form-panel reveal-up reveal-up--delay">
+            @if (session('status'))
+                <div class="alert alert--success">
+                    {{ session('status') }}
+                </div>
+            @endif
 
-        <div>
-            <label for="achievements" class="block text-sm font-medium text-zinc-900">Achievements</label>
-            <textarea id="achievements" wire:model="achievements" rows="5" class="mt-2 block w-full rounded-md border border-zinc-300 px-3 py-2 text-zinc-950 shadow-sm focus:border-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-600/20"></textarea>
-            @error('achievements')
-                <p class="mt-2 text-sm text-red-700">{{ $message }}</p>
-            @enderror
-        </div>
+            <div class="field-stack">
+                <div class="field">
+                    <label for="business_description" class="field__label">Business description</label>
+                    <p class="field__hint">Include market, customer, team, offer, and current operating constraints.</p>
+                    <textarea id="business_description" wire:model="business_description" rows="6" class="field__control"></textarea>
+                    @error('business_description')
+                        <p class="field__error">{{ $message }}</p>
+                    @enderror
+                </div>
 
-        <div>
-            <label for="expected_results" class="block text-sm font-medium text-zinc-900">Expected results</label>
-            <textarea id="expected_results" wire:model="expected_results" rows="5" class="mt-2 block w-full rounded-md border border-zinc-300 px-3 py-2 text-zinc-950 shadow-sm focus:border-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-600/20"></textarea>
-            @error('expected_results')
-                <p class="mt-2 text-sm text-red-700">{{ $message }}</p>
-            @enderror
-        </div>
+                <div class="field">
+                    <label for="achievements" class="field__label">Achievements</label>
+                    <p class="field__hint">List recent wins, strong channels, efficiency gains, or proof that should shape the analysis.</p>
+                    <textarea id="achievements" wire:model="achievements" rows="5" class="field__control"></textarea>
+                    @error('achievements')
+                        <p class="field__error">{{ $message }}</p>
+                    @enderror
+                </div>
 
-        <div class="flex justify-end">
-            <button type="submit" wire:loading.attr="disabled" class="rounded-md bg-teal-700 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-teal-800 disabled:cursor-not-allowed disabled:opacity-60">
-                Submit Request
-            </button>
-        </div>
-    </form>
+                <div class="field">
+                    <label for="expected_results" class="field__label">Expected results</label>
+                    <p class="field__hint">Define the decision, outcome, or improvement you want the analysis to support.</p>
+                    <textarea id="expected_results" wire:model="expected_results" rows="5" class="field__control"></textarea>
+                    @error('expected_results')
+                        <p class="field__error">{{ $message }}</p>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="form-footer">
+                <p class="form-footer__note">Saved requests are reviewed before processing.</p>
+                <button type="submit" wire:loading.attr="disabled" class="button button--dark">
+                    <span wire:loading.remove>Submit Request</span>
+                    <span wire:loading>Submitting...</span>
+                </button>
+            </div>
+        </form>
+    </div>
 </section>

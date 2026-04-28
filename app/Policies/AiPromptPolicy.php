@@ -39,4 +39,9 @@ class AiPromptPolicy
     {
         return $this->isAdmin($user);
     }
+
+    public function reorder(User $user): bool
+    {
+        return $this->isAdmin($user);
+    }
 }

@@ -22,7 +22,6 @@ class PrepareRequestSubmissionAiProcessingAction
             ]);
 
             $prompts = AiPrompt::query()
-                ->active()
                 ->ordered()
                 ->selectForProcessing()
                 ->get();
@@ -31,7 +30,7 @@ class PrepareRequestSubmissionAiProcessingAction
 
             Log::info('Request submission AI processing prepared.', [
                 'request_submission_id' => $context->requestSubmissionId,
-                'active_prompt_ids' => $prompts->pluck('id')->all(),
+                'prompt_ids' => $prompts->pluck('id')->all(),
             ]);
 
             $submission->update([

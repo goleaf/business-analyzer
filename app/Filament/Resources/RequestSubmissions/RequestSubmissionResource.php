@@ -5,9 +5,7 @@ namespace App\Filament\Resources\RequestSubmissions;
 use App\Filament\Resources\RequestSubmissions\Pages\CreateRequestSubmission;
 use App\Filament\Resources\RequestSubmissions\Pages\EditRequestSubmission;
 use App\Filament\Resources\RequestSubmissions\Pages\ListRequestSubmissions;
-use App\Filament\Resources\RequestSubmissions\Pages\ViewRequestSubmission;
 use App\Filament\Resources\RequestSubmissions\Schemas\RequestSubmissionForm;
-use App\Filament\Resources\RequestSubmissions\Schemas\RequestSubmissionInfolist;
 use App\Filament\Resources\RequestSubmissions\Tables\RequestSubmissionsTable;
 use App\Models\RequestSubmission;
 use BackedEnum;
@@ -34,11 +32,6 @@ class RequestSubmissionResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return RequestSubmissionForm::configure($schema);
-    }
-
-    public static function infolist(Schema $schema): Schema
-    {
-        return RequestSubmissionInfolist::configure($schema);
     }
 
     public static function table(Table $table): Table
@@ -78,7 +71,6 @@ class RequestSubmissionResource extends Resource
         return [
             'index' => ListRequestSubmissions::route('/'),
             'create' => CreateRequestSubmission::route('/create'),
-            'view' => ViewRequestSubmission::route('/{record}'),
             'edit' => EditRequestSubmission::route('/{record}/edit'),
         ];
     }

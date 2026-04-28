@@ -5,9 +5,7 @@ namespace App\Filament\Resources\AiPrompts;
 use App\Filament\Resources\AiPrompts\Pages\CreateAiPrompt;
 use App\Filament\Resources\AiPrompts\Pages\EditAiPrompt;
 use App\Filament\Resources\AiPrompts\Pages\ListAiPrompts;
-use App\Filament\Resources\AiPrompts\Pages\ViewAiPrompt;
 use App\Filament\Resources\AiPrompts\Schemas\AiPromptForm;
-use App\Filament\Resources\AiPrompts\Schemas\AiPromptInfolist;
 use App\Filament\Resources\AiPrompts\Tables\AiPromptsTable;
 use App\Models\AiPrompt;
 use BackedEnum;
@@ -36,11 +34,6 @@ class AiPromptResource extends Resource
         return AiPromptForm::configure($schema);
     }
 
-    public static function infolist(Schema $schema): Schema
-    {
-        return AiPromptInfolist::configure($schema);
-    }
-
     public static function table(Table $table): Table
     {
         return AiPromptsTable::configure($table);
@@ -49,7 +42,7 @@ class AiPromptResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()
-            ->select(['id', 'name', 'prompt', 'is_active', 'sort_order', 'created_at', 'updated_at'])
+            ->select(['id', 'name', 'prompt', 'sort_order', 'created_at', 'updated_at'])
             ->ordered();
     }
 
@@ -65,7 +58,6 @@ class AiPromptResource extends Resource
         return [
             'index' => ListAiPrompts::route('/'),
             'create' => CreateAiPrompt::route('/create'),
-            'view' => ViewAiPrompt::route('/{record}'),
             'edit' => EditAiPrompt::route('/{record}/edit'),
         ];
     }

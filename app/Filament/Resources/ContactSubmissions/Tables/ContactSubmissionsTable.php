@@ -3,16 +3,15 @@
 namespace App\Filament\Resources\ContactSubmissions\Tables;
 
 use App\Enums\ContactSubmissionStatus;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
+use App\Filament\Resources\ContactSubmissions\ContactSubmissionResource;
 use Filament\Actions\EditAction;
-use Filament\Actions\ViewAction;
 use Filament\Forms\Components\DatePicker;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
 class ContactSubmissionsTable
 {
@@ -20,9 +19,6 @@ class ContactSubmissionsTable
     {
         return $table
             ->columns([
-                TextColumn::make('id')
-                    ->label('ID')
-                    ->sortable(),
                 TextColumn::make('name')
                     ->searchable()
                     ->sortable(),
@@ -82,18 +78,10 @@ class ContactSubmissionsTable
                             );
                     }),
             ])
+            ->recordUrl(fn (Model $record): string => ContactSubmissionResource::getUrl('edit', ['record' => $record]))
             ->recordActions([
-                ViewAction::make()
-                    ->authorize('view'),
                 EditAction::make()
                     ->authorize('update'),
-            ])
-            ->toolbarActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make()
-                        ->authorize('deleteAny')
-                        ->authorizeIndividualRecords('delete'),
-                ]),
             ]);
     }
 

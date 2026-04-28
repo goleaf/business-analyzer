@@ -56,17 +56,17 @@ class AppLayerBehaviorTest extends TestCase
         $this->assertSame(['First prompt', 'Second prompt'], collect($context->prompts)->pluck('name')->all());
     }
 
-    public function test_prepare_request_submission_ai_processing_uses_active_prompts_only(): void
+    public function test_prepare_request_submission_ai_processing_uses_ordered_prompts(): void
     {
         $submission = RequestSubmission::factory()->create();
 
-        AiPrompt::factory()->create(['name' => 'Second active', 'is_active' => true, 'sort_order' => 20]);
-        AiPrompt::factory()->create(['name' => 'Inactive', 'is_active' => false, 'sort_order' => 5]);
-        AiPrompt::factory()->create(['name' => 'First active', 'is_active' => true, 'sort_order' => 10]);
+        AiPrompt::factory()->create(['name' => 'Second prompt', 'sort_order' => 20]);
+        AiPrompt::factory()->create(['name' => 'First prompt', 'sort_order' => 10]);
+        AiPrompt::factory()->create(['name' => 'Third prompt', 'sort_order' => 30]);
 
         $context = app(PrepareRequestSubmissionAiProcessingAction::class)->handle($submission);
 
-        $this->assertSame(['First active', 'Second active'], collect($context->prompts)->pluck('name')->all());
+        $this->assertSame(['First prompt', 'Second prompt', 'Third prompt'], collect($context->prompts)->pluck('name')->all());
 
         $submission->refresh();
 

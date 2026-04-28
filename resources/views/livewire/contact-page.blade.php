@@ -1,44 +1,67 @@
-<section class="mx-auto max-w-3xl px-4 py-12 lg:px-8 lg:py-16">
-    <div class="mb-8 space-y-3">
-        <p class="text-sm font-semibold uppercase tracking-normal text-teal-700">Contact</p>
-        <h1 class="text-3xl font-semibold tracking-normal text-zinc-950 sm:text-4xl">Send a message</h1>
-    </div>
+<section class="form-page">
+    <div class="contact-layout">
+        <div class="contact-brief reveal-up">
+            <p class="eyebrow">Contact</p>
+            <h1 class="contact-brief__title">Bring a real operating challenge.</h1>
+            <p class="contact-brief__text">
+                Share the constraint, the decision, or the improvement target. We will route it into the same structured review path.
+            </p>
 
-    <form wire:submit="submit" class="space-y-6 rounded-md border border-zinc-200 bg-white p-6">
-        @if (session('status'))
-            <div class="rounded-md border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-800">
-                {{ session('status') }}
+            <div class="contact-steps">
+                <div class="contact-step">
+                    <p class="contact-step__number">01</p>
+                    <p class="contact-step__text">Clarify the business pressure.</p>
+                </div>
+                <div class="contact-step">
+                    <p class="contact-step__number">02</p>
+                    <p class="contact-step__text">Separate signal from noise.</p>
+                </div>
+                <div class="contact-step">
+                    <p class="contact-step__number">03</p>
+                    <p class="contact-step__text">Decide the next action.</p>
+                </div>
             </div>
-        @endif
-
-        <div>
-            <label for="name" class="block text-sm font-medium text-zinc-900">Name</label>
-            <input id="name" type="text" wire:model="name" class="mt-2 block w-full rounded-md border border-zinc-300 px-3 py-2 text-zinc-950 shadow-sm focus:border-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-600/20">
-            @error('name')
-                <p class="mt-2 text-sm text-red-700">{{ $message }}</p>
-            @enderror
         </div>
 
-        <div>
-            <label for="email" class="block text-sm font-medium text-zinc-900">Email</label>
-            <input id="email" type="email" wire:model="email" class="mt-2 block w-full rounded-md border border-zinc-300 px-3 py-2 text-zinc-950 shadow-sm focus:border-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-600/20">
-            @error('email')
-                <p class="mt-2 text-sm text-red-700">{{ $message }}</p>
-            @enderror
-        </div>
+        <form wire:submit="submit" class="form-panel reveal-up reveal-up--delay">
+            @if (session('status'))
+                <div class="alert alert--success">
+                    {{ session('status') }}
+                </div>
+            @endif
 
-        <div>
-            <label for="message" class="block text-sm font-medium text-zinc-900">Message</label>
-            <textarea id="message" wire:model="message" rows="6" class="mt-2 block w-full rounded-md border border-zinc-300 px-3 py-2 text-zinc-950 shadow-sm focus:border-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-600/20"></textarea>
-            @error('message')
-                <p class="mt-2 text-sm text-red-700">{{ $message }}</p>
-            @enderror
-        </div>
+            <div class="field-stack">
+                <div class="field">
+                    <label for="name" class="field__label">Name</label>
+                    <input id="name" type="text" wire:model="name" class="field__control">
+                    @error('name')
+                        <p class="field__error">{{ $message }}</p>
+                    @enderror
+                </div>
 
-        <div class="flex justify-end">
-            <button type="submit" wire:loading.attr="disabled" class="rounded-md bg-teal-700 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-teal-800 disabled:cursor-not-allowed disabled:opacity-60">
-                Send Message
-            </button>
-        </div>
-    </form>
+                <div class="field">
+                    <label for="email" class="field__label">Email</label>
+                    <input id="email" type="email" wire:model="email" class="field__control">
+                    @error('email')
+                        <p class="field__error">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div class="field">
+                    <label for="message" class="field__label">Message</label>
+                    <textarea id="message" wire:model="message" rows="7" class="field__control"></textarea>
+                    @error('message')
+                        <p class="field__error">{{ $message }}</p>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="form-footer form-footer--end">
+                <button type="submit" wire:loading.attr="disabled" class="button button--dark">
+                    <span wire:loading.remove>Send Message</span>
+                    <span wire:loading>Sending...</span>
+                </button>
+            </div>
+        </form>
+    </div>
 </section>

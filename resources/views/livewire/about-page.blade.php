@@ -1,44 +1,110 @@
-<section class="mx-auto grid max-w-6xl gap-10 px-4 py-12 lg:grid-cols-[1.1fr_0.9fr] lg:px-8 lg:py-16">
-    <div class="space-y-6">
-        <div class="space-y-3">
-            <p class="text-sm font-semibold uppercase tracking-normal text-teal-700">About</p>
-            <h1 class="text-4xl font-semibold tracking-normal text-zinc-950 sm:text-5xl">Business Analyzer</h1>
-            <p class="max-w-2xl text-lg leading-8 text-zinc-700">
-                A focused workspace for collecting business context, reviewing submitted requests, and preparing AI-assisted analysis from saved data.
-            </p>
-        </div>
+<div class="home-page">
+    <section class="hero">
+        <div class="hero__background" aria-hidden="true"></div>
 
-        <div class="grid gap-4 sm:grid-cols-3">
-            <div class="rounded-md border border-zinc-200 bg-white p-5">
-                <p class="text-sm font-medium text-zinc-500">Input</p>
-                <p class="mt-2 text-2xl font-semibold text-zinc-950">Structured</p>
+        <div class="hero__inner">
+            <div class="hero__copy reveal-up">
+                <p class="eyebrow">Operational intelligence</p>
+                <h1 class="hero__title">
+                    Business Analyzer
+                </h1>
+                <p class="hero__text">
+                    Turn scattered business context into a clear operating picture, prioritized next moves, and AI-ready analysis.
+                </p>
+                <div class="hero__actions">
+                    <a href="{{ route('public.request') }}" class="button button--primary">
+                        Start diagnostic
+                    </a>
+                    <a href="{{ route('public.contact') }}" class="button button--ghost">
+                        Talk to us
+                    </a>
+                </div>
             </div>
-            <div class="rounded-md border border-zinc-200 bg-white p-5">
-                <p class="text-sm font-medium text-zinc-500">Review</p>
-                <p class="mt-2 text-2xl font-semibold text-zinc-950">Admin-led</p>
-            </div>
-            <div class="rounded-md border border-zinc-200 bg-white p-5">
-                <p class="text-sm font-medium text-zinc-500">AI</p>
-                <p class="mt-2 text-2xl font-semibold text-zinc-950">Prompt-based</p>
+
+            <div class="hero__visual reveal-up reveal-up--delay">
+                <img src="{{ asset('images/operations-map.svg') }}" alt="Operational analysis workspace" class="hero__image">
+                <div class="hero__metrics">
+                    <div class="metric">
+                        <p class="metric__value">4</p>
+                        <p class="metric__label">decision inputs</p>
+                    </div>
+                    <div class="metric">
+                        <p class="metric__value">90d</p>
+                        <p class="metric__label">action horizon</p>
+                    </div>
+                    <div class="metric">
+                        <p class="metric__value">1</p>
+                        <p class="metric__label">ranked plan</p>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <div class="rounded-md border border-zinc-200 bg-white p-6">
-        <h2 class="text-xl font-semibold text-zinc-950">Workflow</h2>
-        <dl class="mt-6 space-y-5">
+    <section class="section section--split">
+        <div class="section__intro">
             <div>
-                <dt class="font-medium text-zinc-950">Submit business context</dt>
-                <dd class="mt-1 text-sm leading-6 text-zinc-600">Requests are stored before any processing is started.</dd>
+                <p class="eyebrow eyebrow--dark">What changes</p>
+                <h2 class="section__title">Less guessing. More controlled improvement.</h2>
             </div>
-            <div>
-                <dt class="font-medium text-zinc-950">Manage prompts in admin</dt>
-                <dd class="mt-1 text-sm leading-6 text-zinc-600">AI prompt templates remain editable from the Filament panel.</dd>
+            <div class="proof-grid">
+                <div class="proof-item">
+                    <p class="proof-item__title">Map</p>
+                    <p class="proof-item__text">Capture current operations, recent wins, and the performance target in one structured request.</p>
+                </div>
+                <div class="proof-item">
+                    <p class="proof-item__title">Score</p>
+                    <p class="proof-item__text">Review what matters first: constraints, leverage points, and measurable operating outcomes.</p>
+                </div>
+                <div class="proof-item">
+                    <p class="proof-item__title">Move</p>
+                    <p class="proof-item__text">Prepare a focused AI-assisted analysis that turns the request into next-step priorities.</p>
+                </div>
             </div>
-            <div>
-                <dt class="font-medium text-zinc-950">Prepare processing</dt>
-                <dd class="mt-1 text-sm leading-6 text-zinc-600">Saved requests can be queued for AI workflow preparation from the admin list.</dd>
+        </div>
+    </section>
+
+    <section class="section section--white">
+        <div class="section__inner">
+            <div class="section__header">
+                <div>
+                    <p class="eyebrow eyebrow--dark">Operating loop</p>
+                    <h2 class="section__title">A clean path from intake to action.</h2>
+                </div>
+                <p class="section__text">
+                    The workflow mirrors the strongest process optimization sites: assess the current state, define the gap, execute the sprint, and keep improving.
+                </p>
             </div>
-        </dl>
-    </div>
-</section>
+
+            <div class="process-list">
+                @foreach ([
+                    ['01', 'Diagnostic intake', 'Submit context, achievements, and expected results without forcing a premature solution.'],
+                    ['02', 'Admin review', 'Keep human judgment in the loop before AI processing starts.'],
+                    ['03', 'Prompt orchestration', 'Use ordered prompts to keep analysis consistent across every request.'],
+                    ['04', 'Priority output', 'Prepare concise recommendations that can become a 30, 60, or 90 day operating plan.'],
+                ] as [$step, $title, $description])
+                    <div class="process-step">
+                        <p class="process-step__number">{{ $step }}</p>
+                        <h3 class="process-step__title">{{ $title }}</h3>
+                        <p class="process-step__text">{{ $description }}</p>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="final-cta">
+            <div class="final-cta__glow" aria-hidden="true"></div>
+            <div class="final-cta__content">
+                <div>
+                    <p class="eyebrow">Start with facts</p>
+                    <h2 class="final-cta__title">Give the analyzer enough signal to find the highest leverage moves.</h2>
+                </div>
+                <a href="{{ route('public.request') }}" class="button button--light">
+                    Submit request
+                </a>
+            </div>
+        </div>
+    </section>
+</div>

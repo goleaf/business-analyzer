@@ -41,14 +41,13 @@ class ModelScopeTest extends TestCase
 
     public function test_ai_prompt_scopes_and_casts(): void
     {
-        AiPrompt::factory()->create(['name' => 'Inactive', 'is_active' => false, 'sort_order' => 1]);
-        AiPrompt::factory()->create(['name' => 'Second', 'is_active' => true, 'sort_order' => 20]);
-        AiPrompt::factory()->create(['name' => 'First', 'is_active' => true, 'sort_order' => 10]);
+        AiPrompt::factory()->create(['name' => 'Third', 'sort_order' => 30]);
+        AiPrompt::factory()->create(['name' => 'Second', 'sort_order' => 20]);
+        AiPrompt::factory()->create(['name' => 'First', 'sort_order' => 10]);
 
-        $prompts = AiPrompt::query()->active()->ordered()->selectForProcessing()->get();
+        $prompts = AiPrompt::query()->ordered()->selectForProcessing()->get();
 
-        $this->assertSame(['First', 'Second'], $prompts->pluck('name')->all());
-        $this->assertTrue($prompts->first()->is_active);
+        $this->assertSame(['First', 'Second', 'Third'], $prompts->pluck('name')->all());
         $this->assertArrayHasKey('prompt', $prompts->first()->getAttributes());
     }
 

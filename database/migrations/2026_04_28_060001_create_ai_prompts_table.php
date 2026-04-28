@@ -15,12 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->longText('prompt');
-            $table->boolean('is_active')->default(true)->index();
             $table->unsignedInteger('sort_order')->default(0)->index();
             $table->timestamps();
 
             $table->index('created_at');
-            $table->index(['is_active', 'sort_order']);
         });
     }
 

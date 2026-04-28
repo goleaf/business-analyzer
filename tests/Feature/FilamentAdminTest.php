@@ -7,6 +7,7 @@ use App\Filament\Resources\AiPrompts\AiPromptResource;
 use App\Filament\Resources\AiPrompts\Pages\CreateAiPrompt;
 use App\Filament\Resources\AiPrompts\Pages\ListAiPrompts;
 use App\Filament\Resources\ContactSubmissions\ContactSubmissionResource;
+use App\Filament\Resources\ContactSubmissions\Pages\ListContactSubmissions;
 use App\Filament\Resources\RequestSubmissions\Pages\ListRequestSubmissions;
 use App\Filament\Resources\RequestSubmissions\RequestSubmissionResource;
 use App\Jobs\ProcessRequestSubmissionData;
@@ -15,6 +16,9 @@ use App\Models\ContactSubmission;
 use App\Models\RequestSubmission;
 use App\Models\User;
 use Filament\Actions\Testing\TestAction;
+use Filament\Enums\ThemeMode;
+use Filament\Facades\Filament;
+use Filament\Support\Enums\Width;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Queue;
 use Livewire\Livewire;
@@ -23,6 +27,17 @@ use Tests\TestCase;
 class FilamentAdminTest extends TestCase
 {
     use RefreshDatabase;
+
+    public function test_filament_panel_uses_requested_admin_defaults(): void
+    {
+        $panel = Filament::getPanel('admin');
+
+        $this->assertTrue($panel->hasTopNavigation());
+        $this->assertFalse($panel->hasDarkMode());
+        $this->assertSame(ThemeMode::Light, $panel->getDefaultThemeMode());
+        $this->assertSame(Width::Full, $panel->getMaxContentWidth());
+        $this->assertSame('edit', $panel->getResourceCreatePageRedirect());
+    }
 
     public function test_configured_admin_can_open_filament_panel_and_resource_lists(): void
     {
@@ -56,6 +71,63 @@ class FilamentAdminTest extends TestCase
             ->get(AiPromptResource::getUrl('index'))
             ->assertOk()
             ->assertSee('Prompt preview');
+    }
+
+    public function test_resource_records_are_edit_first_without_view_pages(): void
+    {
+        $admin = $this->adminUser();
+
+        $requestSubmission = RequestSubmission::factory()->create();
+        $contactSubmission = ContactSubmission::factory()->create();
+        $aiPrompt = AiPrompt::factory()->create();
+
+        $this->actingAs($admin)
+            ->get(RequestSubmissionResource::getUrl('edit', ['record' => $requestSubmission]))
+            ->assertOk();
+
+        $this->actingAs($admin)
+            ->get(ContactSubmissionResource::getUrl('edit', ['record' => $contactSubmission]))
+            ->assertOk();
+
+        $this->actingAs($admin)
+            ->get(AiPromptResource::getUrl('edit', ['record' => $aiPrompt]))
+            ->assertOk();
+
+        $this->actingAs($admin)
+            ->get('/admin/request-submissions/'.$requestSubmission->getKey())
+            ->assertNotFound();
+
+        $this->actingAs($admin)
+            ->get('/admin/contact-submissions/'.$contactSubmission->getKey())
+            ->assertNotFound();
+
+        $this->actingAs($admin)
+            ->get('/admin/ai-prompts/'.$aiPrompt->getKey())
+            ->assertNotFound();
+    }
+
+    public function test_resource_tables_do_not_expose_bulk_actions_or_view_actions(): void
+    {
+        $this->actingAs($this->adminUser());
+
+        $requestSubmission = RequestSubmission::factory()->create();
+        $contactSubmission = ContactSubmission::factory()->create();
+        $aiPrompt = AiPrompt::factory()->create();
+
+        Livewire::test(ListRequestSubmissions::class)
+            ->assertTableColumnDoesNotExist('id')
+            ->assertTableBulkActionDoesNotExist('delete')
+            ->assertTableActionDoesNotExist('view', null, $requestSubmission);
+
+        Livewire::test(ListContactSubmissions::class)
+            ->assertTableColumnDoesNotExist('id')
+            ->assertTableBulkActionDoesNotExist('delete')
+            ->assertTableActionDoesNotExist('view', null, $contactSubmission);
+
+        Livewire::test(ListAiPrompts::class)
+            ->assertTableColumnDoesNotExist('id')
+            ->assertTableBulkActionDoesNotExist('delete')
+            ->assertTableActionDoesNotExist('view', null, $aiPrompt);
     }
 
     public function test_unconfigured_user_cannot_open_filament_panel(): void
@@ -97,8 +169,6 @@ class FilamentAdminTest extends TestCase
             ->fillForm([
                 'name' => 'Market Positioning',
                 'prompt' => 'Analyze market positioning from saved request data.',
-                'is_active' => true,
-                'sort_order' => 5,
             ])
             ->call('create')
             ->assertHasNoFormErrors();
@@ -106,8 +176,7 @@ class FilamentAdminTest extends TestCase
         $this->assertDatabaseHas('ai_prompts', [
             'name' => 'Market Positioning',
             'prompt' => 'Analyze market positioning from saved request data.',
-            'is_active' => true,
-            'sort_order' => 5,
+            'sort_order' => 10,
         ]);
     }
 
@@ -122,6 +191,81 @@ class FilamentAdminTest extends TestCase
 
         Livewire::test(ListAiPrompts::class)
             ->assertCanSeeTableRecords(AiPrompt::query()->where('name', 'Database stored prompt')->get());
+    }
+
+    public function test_ai_prompts_are_reordered_by_dragging_records(): void
+    {
+        $this->actingAs($this->adminUser());
+
+        $first = AiPrompt::factory()->create([
+            'name' => 'First prompt',
+            'sort_order' => 1,
+        ]);
+        $second = AiPrompt::factory()->create([
+            'name' => 'Second prompt',
+            'sort_order' => 2,
+        ]);
+
+        Livewire::test(ListAiPrompts::class)
+            ->assertDontSee('Sort order')
+            ->call('reorderTable', [$second->getKey(), $first->getKey()]);
+
+        $this->assertSame(2, $first->refresh()->sort_order);
+        $this->assertSame(1, $second->refresh()->sort_order);
+    }
+
+    public function test_ai_prompts_are_reordered_with_up_and_down_actions(): void
+    {
+        $this->actingAs($this->adminUser());
+
+        $first = AiPrompt::factory()->create([
+            'name' => 'First prompt',
+            'sort_order' => 10,
+        ]);
+        $second = AiPrompt::factory()->create([
+            'name' => 'Second prompt',
+            'sort_order' => 20,
+        ]);
+        $third = AiPrompt::factory()->create([
+            'name' => 'Third prompt',
+            'sort_order' => 30,
+        ]);
+
+        $component = Livewire::test(ListAiPrompts::class)
+            ->assertTableColumnDoesNotExist('id')
+            ->assertTableActionsExistInOrder(['moveUp', 'moveDown', 'edit']);
+
+        $component->callAction(TestAction::make('moveUp')->table($second));
+
+        $this->assertSame(
+            ['Second prompt', 'First prompt', 'Third prompt'],
+            AiPrompt::query()->ordered()->pluck('name')->all(),
+        );
+
+        $component->callAction(TestAction::make('moveDown')->table($second->refresh()));
+
+        $this->assertSame(
+            ['First prompt', 'Second prompt', 'Third prompt'],
+            AiPrompt::query()->ordered()->pluck('name')->all(),
+        );
+
+        $this->assertSame(10, $first->refresh()->sort_order);
+        $this->assertSame(20, $second->refresh()->sort_order);
+        $this->assertSame(30, $third->refresh()->sort_order);
+    }
+
+    public function test_created_records_redirect_to_edit_pages(): void
+    {
+        $this->actingAs($this->adminUser());
+
+        Livewire::test(CreateAiPrompt::class)
+            ->fillForm([
+                'name' => 'Edit redirect prompt',
+                'prompt' => 'Redirect to edit after creating this prompt.',
+            ])
+            ->call('create')
+            ->assertHasNoFormErrors()
+            ->assertRedirectContains('/edit');
     }
 
     private function adminUser(): User

@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Model;
 #[Fillable([
     'name',
     'prompt',
-    'is_active',
     'sort_order',
 ])]
 class AiPrompt extends Model
@@ -27,7 +26,6 @@ class AiPrompt extends Model
     protected function casts(): array
     {
         return [
-            'is_active' => 'boolean',
             'sort_order' => 'integer',
         ];
     }
@@ -36,18 +34,9 @@ class AiPrompt extends Model
      * @param  Builder<AiPrompt>  $query
      * @return Builder<AiPrompt>
      */
-    public function scopeActive(Builder $query): Builder
-    {
-        return $query->where('is_active', true);
-    }
-
-    /**
-     * @param  Builder<AiPrompt>  $query
-     * @return Builder<AiPrompt>
-     */
     public function scopeOrdered(Builder $query): Builder
     {
-        return $query->orderBy('sort_order')->orderBy('name');
+        return $query->orderBy('sort_order')->orderBy('name')->orderBy('id');
     }
 
     /**
@@ -56,6 +45,11 @@ class AiPrompt extends Model
      */
     public function scopeSelectForProcessing(Builder $query): Builder
     {
-        return $query->select(['id', 'name', 'prompt', 'is_active', 'sort_order']);
+        return $query->select(['id', 'name', 'prompt', 'sort_order']);
+    }
+
+    public static function nextSortOrder(): int
+    {
+        return ((int) static::query()->max('sort_order')) + 10;
     }
 }
