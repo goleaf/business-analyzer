@@ -85,6 +85,10 @@ OPENAI_API_KEY=
 
 Do not commit real API keys or secrets.
 
+## Frontend Assets
+
+All CSS and JavaScript libraries must be installed with npm and loaded from local `node_modules` paths or compiled through Vite. Do not load CSS or JavaScript libraries from CDN servers.
+
 ## Admin Access
 
 After running the seeders, the Backpack admin panel is available at:

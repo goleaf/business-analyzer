@@ -20,6 +20,9 @@ Update this file for every user-visible, operational, or architectural change.
 - Added database-backed cache, session, queue, failed job, and maintenance configuration.
 - Added SQLite database setup using `database/database.sqlite`.
 - Added project README with setup, admin access, environment, testing, and changelog policy.
+- Added a local frontend asset policy requiring CSS and JavaScript libraries to be installed with npm and loaded from `node_modules`.
+- Added Backpack view overrides so admin CSS and JavaScript libraries load from npm packages instead of CDN URLs.
+- Added tests that prevent remote CSS and JavaScript asset references.
 
 ### Verified
 
