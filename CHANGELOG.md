@@ -25,6 +25,7 @@ Update this file for every user-visible, operational, or architectural change.
 - Added tests that prevent remote CSS and JavaScript asset references.
 - Added a manual ChatGPT API smoke-test command that uses the Laravel AI SDK OpenAI provider.
 - Added a fake-backed test for the ChatGPT smoke-test command.
+- Removed literal Cyrillic characters from the language-rule test while keeping the no-Cyrillic enforcement.
 
 ### Verified
 

@@ -9,6 +9,8 @@ use Tests\TestCase;
 
 class LanguageRulesTest extends TestCase
 {
+    private const CYRILLIC_CHARACTER_PATTERN = '/\p{Cyrillic}/u';
+
     public function test_project_text_does_not_contain_russian_characters(): void
     {
         $paths = [
@@ -23,7 +25,7 @@ class LanguageRulesTest extends TestCase
 
         foreach ($paths as $path) {
             if (is_file($path)) {
-                $this->assertDoesNotMatchRegularExpression('/[А-Яа-яЁё]/u', file_get_contents($path), $path);
+                $this->assertDoesNotMatchRegularExpression(self::CYRILLIC_CHARACTER_PATTERN, file_get_contents($path), $path);
                 continue;
             }
 
@@ -35,7 +37,7 @@ class LanguageRulesTest extends TestCase
             foreach ($files as $file) {
                 $contents = file_get_contents($file->getPathname());
 
-                $this->assertDoesNotMatchRegularExpression('/[А-Яа-яЁё]/u', $contents, $file->getPathname());
+                $this->assertDoesNotMatchRegularExpression(self::CYRILLIC_CHARACTER_PATTERN, $contents, $file->getPathname());
             }
         }
     }
